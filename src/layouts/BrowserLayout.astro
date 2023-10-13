@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "./MainLayout.astro";
+import Dock from "../components/BrowserLayout/Dock.astro";
+import appleWallpaper from "../images/apple-wallpaper.jpg";
+import Icon from "astro-icon";
+import Toolbar from "../components/BrowserLayout/Toolbar.astro";
+---
+
+<MainLayout title="Browser">
+  <div class="relative flex-1">
+    <Image
+      src={appleWallpaper}
+      alt="apple-wallpaper"
+      class="test absolute -z-10 h-screen w-screen object-cover"
+    />
+  </div>
+  <Toolbar />
+  <slot />
+  <Dock />
+</MainLayout>
+
+<style>
+  .test {
+    backdrop-filter: blur(10px);
+  }
+</style>

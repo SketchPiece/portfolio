@@ -1,0 +1,54 @@
+---
+import Icon from "astro-icon";
+import { getEntry } from 'astro:content'
+import IconButton from "../ui/IconButton.astro";
+
+const codeContent = await getEntry('code', 'projects')
+const { Content } = await codeContent.render()
+const { preview } = Astro.props
+---
+
+<div class="flex-1 flex flex-col">
+  <div class="flex">
+    <div class="flex items-center gap-1.5 border-t border-r border-r-faint border-primary-blue bg-editor-gray px-3 py-2">
+      <Icon name={preview ? "preview" : "file"} class="h-5 w-5" />
+      <span class="text-white italic">
+        Preview README.md
+      </span>
+    </div>
+    <div class="flex-1 border-b-2 border-faint flex items-center justify-end gap-1 pr-2">
+      <IconButton highlighted>
+        <a href="/browser">
+          <Icon name="play" class="h-5 w-5" />
+        </a>
+      </IconButton>
+      <IconButton>
+        <Icon name="split-horizontal" class="h-5 w-5" />
+      </IconButton>
+      <IconButton>
+        <Icon name="kebab-horizontal" class="h-5 w-5" />
+      </IconButton>
+    </div>
+  </div>
+  <div class="bg-editor-gray flex-1 pl-8 pt-4">
+    <!-- <slot/> -->
+    <Content />
+  </div>
+</div>
+
+<style is:global>
+.astro-code > code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.astro-code > code .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1rem;
+  margin-right: 1.5rem;
+  display: inline-block;
+  text-align: right;
+  color:rgb(110, 118, 129);
+}
+</style>

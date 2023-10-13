@@ -1,0 +1,40 @@
+---
+import Icon from "astro-icon";
+import Hoverable from "../ui/Hoverable.astro";
+---
+
+<footer class="flex items-center border-t border-faint text-stale relative">
+  <a
+    href="https://github.com/SketchPiece"
+    target="_blank"
+    class="relative flex items-center gap-1 bg-primary-blue px-3.5 py-0.5 text-white outline-none focus-visible:bg-[#4993DC]"
+  >
+    <Icon name="remote" class="h-5 w-5" />
+     GitHub
+  </a>
+  <div class="flex h-full flex-1 gap-2 pl-1.5 pr-3">
+    <Hoverable class="flex items-center gap-1 px-1">
+      <Icon name="source-control" class="h-4 w-4" />
+      <span>main</span>
+      <Icon name="sync" class="h-4 w-4" />
+    </Hoverable>
+    <Hoverable class="flex px-1">
+      <div class="flex gap-1.5">
+        <div class="flex items-center gap-1">
+          <Icon name="error" class="h-4 w-4" />
+           0
+        </div>
+        <div class="flex items-center gap-1">
+          <Icon name="warning" class="h-4 w-4" />
+           0
+        </div>
+      </div>
+    </Hoverable>
+    <Hoverable class="ml-auto flex items-center px-1.5">UTF-8</Hoverable>
+    <Hoverable class="flex items-center px-1.5">JavaScript</Hoverable>
+    <Hoverable class="flex items-center px-1.5">Layout: U.S.</Hoverable>
+    <Hoverable class="flex items-center px-1.5">
+      <Icon name="bell" class="h-4 w-4" />
+    </Hoverable>
+  </div>
+</footer>

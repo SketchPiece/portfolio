@@ -1,0 +1,210 @@
+---
+import { cn } from "../../lib/utils";
+import fiderIcon from "../../images/dock/finder.png";
+import launchpadIcon from "../../images/dock/launchpad.png";
+import chromeIcon from "../../images/dock/google-chrome.png";
+import terminalIcon from "../../images/dock/terminal.png";
+import vscodeIcon from "../../images/dock/vscode.png";
+import spotifyIcon from "../../images/dock/spotify.png";
+import telegramIcon from "../../images/dock/telegram.png";
+import discordIcon from "../../images/dock/discord.png";
+import slackIcon from "../../images/dock/slack.png";
+import settingsIcon from "../../images/dock/settings.png";
+
+import { Image } from "astro:assets";
+
+interface Props {
+  hidden?: boolean;
+}
+
+const { hidden } = Astro.props;
+
+const items = [
+  {
+    name: "Finder",
+    icon: fiderIcon,
+    active: true,
+  },
+  {
+    name: "Launchpad",
+    icon: launchpadIcon,
+  },
+  {
+    name: "Google Chrome",
+    icon: chromeIcon,
+    active: true,
+  },
+  {
+    name: "Terminal",
+    icon: terminalIcon,
+  },
+  {
+    name: "Visual Studio Code",
+    icon: vscodeIcon,
+  },
+  {
+    name: "Spotify",
+    icon: spotifyIcon,
+  },
+  {
+    name: "Telegram",
+    icon: telegramIcon,
+  },
+  {
+    name: "Discord",
+    icon: discordIcon,
+  },
+  {
+    name: "Slack",
+    icon: slackIcon,
+  },
+  {
+    name: "Settings",
+    icon: settingsIcon,
+  },
+];
+---
+
+<div
+  class={cn(
+    "apple-dock fixed z-50 apple-dock-container rounded-3xl left-1/2 -translate-x-1/2",
+    hidden ? "-bottom-24" : "bottom-3",
+  )}
+  transition:name="dock"
+>
+  <div
+    id="dock"
+    class="apple-dock flex h-full w-auto gap-1.5 rounded-3xl border border-white/10 bg-[#4a4a4a]/40 p-1 pb-3.5"
+  >
+    {
+      items.map(({ name, icon, active }) => (
+        <div
+          class={cn(
+            "app-container relative h-16 w-16 transition-all",
+            active &&
+              "before:absolute before:-bottom-2.5 before:left-1/2 before:h-1.5 before:w-1.5 before:-translate-x-1/2 before:rounded-full before:bg-[#7c7c7c]/80",
+          )}
+        >
+          <div class="absolute -top-16 hidden">{name}</div>
+          <Image src={icon} alt={name} class="app-icon" />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const iconContainers =
+    document.querySelectorAll<HTMLDivElement>(".app-container");
+  const icons = document.querySelectorAll<HTMLDivElement>(".app-icon");
+  const dockElement = document.getElementById("dock") as HTMLDivElement;
+
+  dockElement.addEventListener("mousemove", (e) => {
+    // const dockRect = dockElement.getBoundingClientRect();
+    // // console.log(dockRect.left);
+    // const iconWidth = dockRect.width / icons.length;
+    // const dockClientX = e.clientX - dockRect.left;
+    // const iconCenterX = iconWidth / 2;
+    // // console.log(dockWidth);
+    // // const dockHorizontalMargin = (window.innerWidth - dockWidth) / 2;
+    // // console.log(window.innerWidth, dockHorizontalMargin);
+    // // let dockClientX = e.clientX - dockHorizontalMargin;
+    // // console.log(dockClientX, iconWidth, iconCenterX);
+    // const distanceFromIconCenterX = Math.abs(dockClientX - iconCenterX);
+    // let proportionalDistanceFromCenter = Math.max(
+    //   1 - distanceFromIconCenterX / iconCenterX,
+    //   0,
+    // );
+    // const scaleFactor = 1 + proportionalDistanceFromCenter * 0.3;
+    // console.log(proportionalDistanceFromCenter, scaleFactor);
+    // icons[0].style.transform = `scale(${scaleFactor})`;
+    // console.log(1 - distanceFromIconCenterX / iconCenterX);
+    icons.forEach((icon, i) => {
+      icon.style.transition = "none";
+
+      const iconRect = icon.getBoundingClientRect();
+      const iconCenterX = iconRect.left + iconRect.width / 2;
+      const distanceFromIconCenterX = Math.abs(e.clientX - iconCenterX);
+      const isClientLeft = e.clientX < iconCenterX;
+      const proportionalDistanceFromCenter = Math.max(
+        1 - distanceFromIconCenterX / 300,
+        0,
+      ); // Adjust 100 for sensitivity
+      const scaleFactor = 1 + proportionalDistanceFromCenter * 0.5; // Adjust 0.5 for max scale factor
+      // ? if client cursor on the left, margin bigger
+      // const leftIconMargin = isClientLeft ? ;
+      // const rightIconMargin = 1;
+      if (i === 0) {
+        console.log(
+          {
+            proportionalDistanceFromCenter,
+            distanceFromIconCenterX,
+            iconCenterX,
+            clientX: e.clientX,
+          },
+          // scaleFactor,
+        );
+
+        // console.log("left", 1, "right", 1);
+      }
+      const proportionalMargin = proportionalDistanceFromCenter * 10;
+      // console.log(proportionalMargin);
+      // icon.style.margin = `0 ${proportionalMargin}px 0 ${proportionalMargin}px`;
+
+      // iconContainers[i].style.margin = `0 ${scaleFactor}px 0 ${scaleFactor}px`;
+      icon.style.transform = `scale(${scaleFactor})`;
+    });
+
+    // dockClientX = dockClientX < 0 ? 0 : dockClientX;
+    // const activeIconIndex = Math.trunc(dockClientX / iconWidth);
+    // const activeIconXHoverPercentage =
+    //   (dockClientX - iconWidth * activeIconIndex) / iconWidth;
+
+    // console.log(dockClientX - iconWidth * activeIconIndex);
+    // console.log(activeIconIndex, iconWidth / 2);
+  });
+
+  dockElement.addEventListener("mouseleave", () => {
+    iconContainers.forEach((container) => (container.style.margin = "0"));
+    icons.forEach((icon, i) => {
+      icon.style.transition = "all 200ms";
+      icon.style.transform = `scale(1)`;
+      iconContainers[i].style.margin = "0";
+      iconContainers[i].style.transition = "all 200ms";
+      // setTimeout(() => {
+      // }, 1000);
+    });
+  });
+
+  // console.log(icons);
+  // function focusIcon(element: HTMLDivElement, index: number) {
+  //   // element.style.transform = "scale(1.5) translateY(-10px)";
+  // }
+
+  // icons.forEach((icon, index) => {
+  //   icon.addEventListener(
+  //     "mouseover",
+  //     (element) =>
+  //       element.target && focusIcon(element.target as HTMLDivElement, index),
+  //   );
+  //   // icon.addEventListener("mouseleave", (event) => {
+  //   //   const element = event.target as HTMLDivElement;
+  //   //   element.style.transform = "scale(0.5)";
+  //   // });
+  // });
+</script>
+
+<style>
+  .apple-dock-container {
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .app-icon {
+    transform-origin: bottom;
+  }
+
+  /* .apple-app::before {
+    @apply h-1 w-1;
+  } */
+</style>

@@ -1,0 +1,22 @@
+---
+import Icon from "astro-icon";
+import Hoverable from "../ui/Hoverable.astro";
+import { cn } from "../../lib/utils";
+
+interface Props {
+  name: string
+  href?: string
+  preview?: boolean
+  active?: boolean
+}
+
+const { name, href, preview, active } = Astro.props
+---
+
+<Hoverable hover={preview || active} href={href} disabled={!href && !preview}>
+  <div class={cn("flex gap-2 items-center pl-7 py-0.5", preview && "italic")}>
+    {preview && <Icon name="close" class="h-5 w-5" />}
+    <Icon name="file" class="h-5 w-5" />
+    <p>{name}</p>
+  </div>
+</Hoverable>

@@ -1,0 +1,27 @@
+---
+import Icon from "astro-icon";
+import IconButton from "../ui/IconButton.astro";
+import Collapse from "../ui/Collapse.astro";
+import File from './File.astro'
+
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1);
+---
+
+<div class="flex w-72 flex-col border-r border-faint">
+  <div class="flex items-center justify-between py-2 pl-6 pr-3.5">
+    <p class="text-sm uppercase">Explorer</p>
+    <IconButton>
+      <Icon name="kebab-horizontal" class="h-5 w-5" />
+    </IconButton>
+  </div>
+  <Collapse name="Open editors">
+    <File name="about.md" preview />
+  </Collapse>
+
+  <Collapse name="portfolio-code">
+    <File name="explore.md" href="/" active={!currentPath}/>
+    <File name="projects.js" href="/projects" active={currentPath === 'projects'} />
+    <File name="package.json" />
+  </Collapse>
+</div>

@@ -1,0 +1,37 @@
+---
+import Icon from "astro-icon";
+import { cn } from "../../lib/utils";
+
+const toolbarItems = [
+  "Chrome",
+  "File",
+  "Edit",
+  "View",
+  "History",
+  "Bookmarks",
+  "Profiles",
+  "Tab",
+  "Window",
+  "Help",
+];
+---
+
+<div
+  class="fixed inset-x-0 flex select-none bg-black/20 px-2 text-[13px] text-white backdrop-blur-2xl"
+>
+  <div class="grid w-fit place-items-center rounded px-4 hover:bg-white/20">
+    <Icon name="apple-logo" class="h-4 drop-shadow-md" />
+  </div>
+  {
+    toolbarItems.map((item) => (
+      <div
+        class={cn(
+          "grid h-full w-fit place-items-center rounded px-3 py-1 hover:bg-white/20",
+          item === "Chrome" && "font-bold",
+        )}
+      >
+        {item}
+      </div>
+    ))
+  }
+</div>

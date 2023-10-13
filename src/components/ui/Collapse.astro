@@ -1,0 +1,15 @@
+---
+import Icon from "astro-icon";
+const { name } = Astro.props
+---
+
+<div>
+  <input type="checkbox" class="peer sr-only" id={name}>
+  <label for={name} class="flex gap-1 px-1 select-none peer-checked:[&>svg]:-rotate-90 border border-transparent peer-focus:border-primary-blue py-0.5">
+    <Icon name="chevron-down" class="h-5 w-5" />
+    <p class="text-sm uppercase font-bold">{name}</p>
+  </label>
+  <div class="peer-checked:hidden pt-1">
+    <slot />
+  </div>
+</div>

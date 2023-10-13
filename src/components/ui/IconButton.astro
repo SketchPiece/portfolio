@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  highlighted?: boolean
+}
+
+const props = Astro.props;
+const { highlighted } = props
+---
+
+<div class="relative">
+  {highlighted && <div class="absolute bg-primary-blue rounded-md animate-ping inset-0.5 pointer-events-none "></div>}
+  <div
+    class={cn("cursor-pointer bg-charcoal hover:bg-[#303030] p-1 rounded-md z-30 relative", props.class)}
+    {...props}
+    >
+    <slot />
+  </div>
+</div>

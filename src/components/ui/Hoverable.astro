@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/utils";
+interface Props extends HTMLAttributes<"a"> {
+  hover?: boolean
+  disabled?: boolean
+}
+
+const props = Astro.props;
+const { href, hover, disabled } = props
+---
+
+<a class={cn("relative select-none", props.class)} href={href} {...props} data-astro-reload>
+  {!disabled && <div class={cn("absolute inset-0", hover ? 'bg-white/10' : 'hover:bg-white/10')}></div>} 
+  <slot />
+</a>

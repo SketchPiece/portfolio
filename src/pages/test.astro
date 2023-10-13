@@ -1,0 +1,45 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Hello">
+  <div class="bg-gray-100 p-8">
+    <h1 class="mb-6 text-2xl font-semibold">Featured</h1>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Feature 1 -->
+      <div class="rounded-lg bg-white p-4 shadow-md transition hover:shadow-xl">
+        <img
+          src="path_to_image"
+          alt="KPU Courses"
+          class="mx-auto mb-4 h-16 w-16"
+        />
+        <h2 class="text-lg font-medium">Course Websites</h2>
+        <p class="text-sm text-gray-600">Moodle</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="rounded-lg bg-white p-4 shadow-md transition hover:shadow-xl">
+        <img
+          src="path_to_image"
+          alt="Student Profile"
+          class="mx-auto mb-4 h-16 w-16"
+        />
+        <h2 class="text-lg font-medium">Student Profile</h2>
+        <!-- Additional content for this card can be added here -->
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="rounded-lg bg-white p-4 shadow-md transition hover:shadow-xl">
+        <img
+          src="path_to_image"
+          alt="Student Email"
+          class="mx-auto mb-4 h-16 w-16"
+        />
+        <h2 class="text-lg font-medium">Student Email (New Version)</h2>
+        <p class="text-sm text-gray-600">@student.kpu.ca</p>
+      </div>
+
+      <!-- And so on for other features... -->
+    </div>
+  </div>
+</MainLayout>
